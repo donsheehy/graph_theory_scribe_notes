@@ -9,12 +9,17 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
+\newtheorem{proposition}{Proposition}
+\newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{example}{Example}
+\newtheorem{definition}{Definition}
 
 \newcommand{\lecture}[4]{
    \pagestyle{myheadings}
    \thispagestyle{plain}
    \newpage
-   \setcounter{lecnum}{#1}
+%   \setcounter{lecnum}{#1}
    \setcounter{page}{1}
    \noindent
    \begin{center}
@@ -27,7 +32,7 @@
        \vspace{4mm}
        \hbox to 6.28in { {\Large \hfill Lecture #1: #2  \hfill} }
        \vspace{2mm}
-       \hbox to 6.28in { {\it Lecturer: {\it Don Sheehy {\tt <drsheehy@ncsu.edu>}} \hfill Scribe: #3} }
+       \hbox to 6.28in { {\it Lecturer: {\it Don Sheehy {\tt <drsheehy@ncsu.edu>}} \hfill Scribe: #4} }
       \vspace{2mm}}
    }
    \end{center}
