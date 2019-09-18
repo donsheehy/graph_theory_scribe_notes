@@ -21,3 +21,7 @@ They are scribed from the lectures by Don Sheehy.
 - properly label your lecture (number, date, and scribe(s))
 - Thoroughly check for correct grammar and punctuation.
 - Write out quantifiers ("for all" and "there exists").
+
+## Deadline
+
+Each group is expected to upload the scribe note of the week they are responsible for by the following Monday.
