@@ -1,0 +1,83 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{float}
+\def\simp{\text{simp}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\theoremstyle{example}
+\newtheorem{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+
+\input{macros}
+\usepackage{graphics,tikz}
+\begin{document}
+
+
+
+  \title{Lecture 3}
+  \author{Scribed by: Xianpeng Liu and Yuhan Chen}
+  \maketitle
+
+
+
+
+  \begin{definition}
+    A \textit{walk} in a graph $G=(V,E)$ is a sequence of vertices $(v_{0},...,v_{k})$ such that $(v_{i-1},v_{i})\in E$ for all $i=1...k$.
+  \end{definition}
+
+  \begin{definition}
+    A \textit{Euler walk} is a walk that spans every edge exactly once, i.e., $E=\{(v_{i-1},v_{i}) |  i\in \{1...k\}\}$.
+  \end{definition}
+
+  \begin{remark}
+  A walk is the image of a morphism $P_{k}\to G$. A tour is the image of a morphism $C_{k}\to G$.
+  \end{remark}
+
+  \begin{definition}
+    Let $G=(V,E)$. Vertices $u,v$ are \textit{connected} if $\exists$ a walk that starts at $u$ and ends at $v$.
+  \end{definition}
+
+  \begin{remark}
+  We say $G$ is \textit{connected} if $u$ is connected to $v$ for $u,v \in V$.
+  \end{remark}
+
+
+  \begin{theorem}
+    Let $G$ be a connected graph. Then, $G$ has an Euler tour iff. the degree of every vertex is even.
+  \end{theorem}
+  \begin{proof}
+    Prove by contradiction. Assume there is no Euler tour. Take longest tour and remove edges. Result still has all even degrees. So, there is a tour that shares $n$ vertex with the longest tour. Combine to get a longer tour and a contradiction.
+  \end{proof}
+
+  \begin{definition}
+    The \textit{connected components} of a graph are its maximal connected subgraphs.
+  \end{definition}
+  \begin{remark}
+  Connectivity is an Equivalence relation. Equivalence connected components are the subgraphs induced on the equivalence classes of connectivity.
+  \end{remark}
+  \begin{definition}
+    Say $u,v \in V$ are \textit{2-connected} if they remain connected even if I remove any one vertex other than $u,v$.
+  \end{definition}
+      \begin{figure}[H]
+    \centering
+      \includegraphics[width=0.48\textwidth]{fig1.png}
+      \caption{This graph is not 2-connected}
+    \end{figure}
+  \begin{definition}
+    Say $G$ are \textit{2-connected} if $u,v$ are 2-connected for all $u,v \in V$.
+  \end{definition}
+
+  \begin{definition}
+    Say $G$ are \textit{k-connected} if $G\setminus S$ is conencted for any subset $S\subset V$ such that $|S|<k$.
+  \end{definition}
+
+
+
+\end{document}
