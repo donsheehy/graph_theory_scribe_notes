@@ -1,0 +1,375 @@
+\documentclass{article}
+
+\usepackage{amsmath,amssymb,amsthm,txfonts}
+
+\input{macros}
+\usepackage{graphics,tikz}
+\usepackage{chngcntr}
+
+\newtheorem{case}{Case}
+\counterwithin*{case}{theorem}
+\newtheorem{question}{Question}
+\newtheorem{lemma}{Lemma}
+%\def\geom{\text{geom}}
+%\def\sim{\text{sim}}
+%\def\R{\mathbb{R}}
+
+\begin{document}
+
+%FILL IN THE RIGHT INFO.
+%\lecture{**LECTURE-NUMBER**}{**DATE**}{**LECTURER**}{**SCRIBE**}
+\lecture{7}{Sep 16, 2019}{Don Sheehy}{Palash Gupta, Rishabh Agrawal, Jash Dhakad }
+
+\section{Forbidden structures}
+
+$
+\begin{cases}
+    \text{Flawless}\\
+    \text{Watertight}  \longrightarrow  \text{Defined in terms of absence}\\
+    \text{Bald}
+\end{cases}
+$
+
+$\neg\exists \Longrightarrow $ Does not exist\\
+$\forall\neg \Longrightarrow $ For all, it's false
+
+\subsection{Example: Menger's Theorem}
+\begin{theorem}[Menger's Theorem]
+    A graph G is k-connected iff for all u,v $\in V_{G}$, there exist k disjoint\footnote{\label{disjoint}Disjoint paths are those which share no vertices except the end vertices} paths from u to v.
+\end{theorem}
+
+\begin{proof}[Proof idea.]\let\qed\relax
+    If there are $k$ disjoint paths from $u$ to $v$ for all $(u,v) \in V_{G}$, we must remove at least $k$ vertices to make $u$ and $v$ disconnected. Therefore, you can remove any $k-1$ vertices and the graph stays connected. So the graph is $k$-connected. If there are less than $k$ disjoint paths from $u$ to $v$, then you can find $k-1$ vertices such that their removal disconnects $u$ and $v$.
+\end{proof}
+
+\subsection{Example: Bipartite graphs and cycles}
+\begin{theorem}
+    \label{thm:bipartiteNoOddCycle}
+    G is bipartite iff it contains no odd length cycles.
+\end{theorem}
+
+\begin{proof}
+    To prove this we need to prove both the cases, i.e. if a graph is bipartite, it contains no odd cycles and if a graph contains no odd cycles, it is bipartite.\\
+
+    \begin{case}
+        If a graph is bipartite, it cannot contain an odd cycle.\\
+        \\
+        Let $G$ be a bipartite graph. We'll prove that it contains no odd cycles by contradiction. First let us assume that it contains an odd cycle of size $n$. We'll number all the vertices on this cycle from $0$ to $n-1$ such that there is an edge between $i$ and $i-1$ for all $i$ from $1$ to $n-1$. Also, there is an edge between $n-1$ and $0$, completing the cycle. As this is a bipartite graph, all the vertices can be divided into two sets $A$ and $B$, such that for any edge $(u,v) \in E_{G}$, $u \in A$ and $v \in B$. Let's say vertex $0 \in A$, then $1 \in B$ (because there is an edge between $0$ and $1$), $2 \in A$ and so on. We can observe that all even numbered vertices belong to $A$ whereas all odd numbered vertices belong to $B$. $n$ is an odd number (as this is an odd cycle), therefore $n-1$ is an even number and vertex labeled $n-1 \in A$. But there is an edge between $n-1$ and $0$ and both belong to set $A$. This is not allowed in a bipartite graph. Therefore, our assumption must be wrong and there cannot exist an odd length cycle in graph $G$.
+    \end{case}
+
+    \begin{case}
+        If a graph has no odd length cycle, it is bipartite.\\
+        \\
+        Let $G$ be a graph with no odd length cycle. We need to prove that it is bipartite. We'll do that by defining an algorithm to divide the vertices in two sets and then prove that conditions of a bipartite graph are satisfied.\\
+        \\Following are the steps to partition the vertices into sets $A$ and $B$:
+        \begin{enumerate}
+            \item Choose any arbitrary vertex as the starting point. Let's call it $s$.
+            \item Label all vertices by the minimum number of edges we need to travel to $s$, i.e. by the minimum distance from $s$.
+            \item From the vertices which are yet to be labelled (as they are not connected to $s$), choose an arbitrary vertex and repeat the process till all vertices are labelled.
+            \item Put all vertices with even labels in set $A$ and all vertices with odd labels in set $B$.
+        \end{enumerate}
+        Now we need to show that sets $A$ and $B$ so formed follow the conditions of a bipartite graph, i.e. no edge can exist between two vertices of same set (either $A$ or $B$), i.e. that $A$ and $B$ are independent sets. We'll prove this by contradiction. Let's assume that $u$ and $v$ are two vertices of the same set (either $A$ or $B$) and have an edge between them. Let the label of $u$ be $x$ and $v$ be $y$ respectively. As they are of the same set, either both $x$ and $y$ are odd or both are even.\\
+        \\
+        Let $p$ be a path of length $x$ from $s$ to $u$. $p$ is the minimal length path from $s$ to $u$.\\
+        \begin{equation*}
+            p = [s,p_{1},p_{2},\dots,p_{x-1},u]
+        \end{equation*}
+        \phantom{xxxxxxxxxxxxxxxxxxxxxxxxx}Similarly,
+        \begin{equation*}
+            q = [s,q_{1},q_{2},\dots,q_{y-1},v]
+        \end{equation*}
+        Observe that $p_{i}$ vertex will have the label $i$. This is because it can be reached from $s$ in minimum of $i$ steps. All these vertices ($u$, $v$,$p_{i}$, $q_{j}$ etc.) are connected to $s$. If it was possible to reach $p_{i}$ in less than $i$ steps, then $u$ can be reached in less than $x$, which is not possible as $x$ is the label of $u$. Similarly, label of $q_{j}$ is $j$. Now there can be two cases:\\
+        \\
+        If $p$ \& $q$ are disjoint paths, then $p_{i}\ne q_{i}$ for all $i$. In this case, $s$ to $u$ to $v$ to $s$ makes a cycle (as there are no repeated vertices). Length of this cycle is dis($s$ to $u$) + dis($u$ to $v$) + dis($v$ to $s$) = $x+y+1$. We know that $x+y$ is even, so $x+y+1$ is odd. But $G$ does not contain odd cycles, so this case causes contradiction.\\
+        \\
+        The other case is that $p$ and $q$ paths contain common vertices. Note that any common vertex will have the same index in $p$ and $q$, equal to its label (as shown above). Let $l$ be the largest label such that $p_{l}=q_{l}$. This implies that paths $[p_{l} \dots u]$ and $[p_{l} \dots v]$ are disjoint. This is because if there were any other common point, then that would have label more than $l$, which is not possible as $l$ is supposed to be the largest. Therefore, $p_{l}$ to $u$ to $v$ to $p_{l}$ forms a cycle of length dis($p_{l}$ to $u$) + dis($u$ to $v$) + dis($v$ to $p_{l}$) = $(x-l)$ + $1$ + $(y-l)$ = $x+y-2l+1$. As $x+y$ is even, $x+y-2l+1$ is odd. But $G$ does not contain any odd cycle, so this case causes contradiction.\\
+        \\
+        From the two above contradictions, we can deduce that our assumptions must be wrong and $u$ \& $v$ cannot have an edge, if they belong to the same set.\\
+        \\
+        $\therefore A$ and $B$ are independent sets.\\
+        $\therefore G$ is bipartite.
+    \end{case}
+\end{proof}
+
+Some structure (odd cycles) doesn't exist, therefore some other structure must exist (bipartition). This is often the case. Only a small set of structures may prevent a graph from having some properties (example planarity, $K_{5}$, $K_{3,3}$)
+  
+\section{Trees and forests}
+\begin{definition}
+    A forest is a graph that contains no cycles.
+\end{definition}
+\begin{definition}
+    A connected forest is called a tree.
+\end{definition}
+\begin{theorem}
+    A connected graph is a tree iff it contains no {$C_3$} minor.
+\end{theorem}
+
+\begin{proof}
+    To prove this we need to prove both the directions, i.e. a tree cannot contain a $C_{3}$ minor and that if a connected graph contains no $C_{3}$ minor, it is a tree.
+
+    \begin{case}
+To prove that if the graph is a tree then it does not contain a $C_3$ minor.\\
+\\
+Proof by contradiction: \\
+Let us assume that the graph $G$ contains a $C_3$ minor. If this is true, we can state that the subgraph of $G$ can be reduced to a $C_3$ minor by edge contraction, which means that there exists a cycle in the graph. This is because the preimages of the vertices of the $C_{3}$ minor are connected graphs which are also connected to one another by the edges mapping to $C_{3}$. Therefore, a cycle can always be formed (as shown in Figure. \ref{fig:Fig1}). The definition of tree states that it cannot contain any cycle. Hence, our assumption was wrong and the tree cannot contain a $C_{3}$ minor. \\
+    \end{case}
+
+    \begin{case}
+        To prove that if a connected graph does not contain a $C_{3}$ minor then it is a tree.\\
+\\Proof by contradiction: 
+\\
+Let the graph $G$ be a connected graph which does not contain a $C_{3}$ minor. Let us assume that it is not a tree. This means that there exists a cycle in the graph. Any cycle can be reduced to $C_{3}$ by edge contraction. So this cycle in the graph can also be reduced to $C_{3}$ by edge contraction, which would mean that this graph has a $C_{3}$ minor. But we know that $G$ does not have a $C_{3}$ minor. This causes a contradiction, which means that our assumption must be wrong and that $G$ must be a tree.
+
+\end{case}
+
+\begin{figure}[h!]
+\begin{center}
+    
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,723); %set diagram left start at 0, and has height of 723
+
+%Straight Lines [id:da17346525375595823] 
+\draw    (169,65) -- (209,109) ;
+
+
+%Straight Lines [id:da642015983522537] 
+\draw    (465,63) -- (527,121) ;
+
+
+%Straight Lines [id:da14931962569626012] 
+\draw    (169,65) -- (149,120) ;
+
+
+%Straight Lines [id:da08080995923232726] 
+\draw    (169,65) -- (259,77) ;
+
+
+%Straight Lines [id:da7297042825487361] 
+\draw    (406,106) -- (446,150) ;
+
+
+%Straight Lines [id:da9983591846519424] 
+\draw    (249,153) -- (289,197) ;
+
+
+%Straight Lines [id:da39921401012667346] 
+\draw    (259,77) -- (406,106) ;
+
+
+%Straight Lines [id:da8884551136199939] 
+\draw    (465,63) -- (406,106) ;
+
+
+%Straight Lines [id:da36258657409434103] 
+\draw    (149,120) -- (140,66) ;
+
+
+%Straight Lines [id:da8653085358128052] 
+\draw    (209,109) -- (249,153) ;
+
+
+%Straight Lines [id:da9820821296870912] 
+\draw    (289,197) -- (381,169) ;
+
+
+%Straight Lines [id:da16410625947921065] 
+\draw    (289,197) -- (373,208) ;
+
+
+%Straight Lines [id:da38435752905494924] 
+\draw    (446,150) -- (381,169) ;
+
+
+%Straight Lines [id:da3382749363158353] 
+\draw    (289,197) -- (329,241) ;
+
+
+%Straight Lines [id:da9797038377585146] 
+\draw    (289,197) -- (254,248) ;
+
+
+%Shape: Circle [id:dp47392873976328787] 
+\draw   (105,102) .. controls (105,61.68) and (137.68,29) .. (178,29) .. controls (218.32,29) and (251,61.68) .. (251,102) .. controls (251,142.32) and (218.32,175) .. (178,175) .. controls (137.68,175) and (105,142.32) .. (105,102) -- cycle ;
+%Shape: Circle [id:dp971042509290946] 
+\draw   (377,125) .. controls (377,80.26) and (413.26,44) .. (458,44) .. controls (502.74,44) and (539,80.26) .. (539,125) .. controls (539,169.74) and (502.74,206) .. (458,206) .. controls (413.26,206) and (377,169.74) .. (377,125) -- cycle ;
+%Left Arrow [id:dp3157799490145934] 
+\draw   (303.39,410) -- (290.1,367.53) -- (296.85,367.57) -- (297.16,303.97) -- (310.66,304.03) -- (310.35,367.63) -- (317.1,367.66) -- cycle ;
+%Straight Lines [id:da5554865929934945] 
+\draw    (259,584) -- (298,641) ;
+
+
+%Straight Lines [id:da012688686285775796] 
+\draw    (145,452) -- (161,515) ;
+
+
+%Straight Lines [id:da4841755849594085] 
+\draw    (212,639) -- (259,584) ;
+
+
+%Straight Lines [id:da8326150314982221] 
+\draw    (161,515) -- (197,441) ;
+
+
+%Straight Lines [id:da10427054510928668] 
+\draw    (197,441) -- (259,584) ;
+
+
+%Straight Lines [id:da9955678761970332] 
+\draw    (392,483) -- (259,584) ;
+
+
+%Straight Lines [id:da24379949366012799] 
+\draw    (197,441) -- (392,483) ;
+
+
+%Straight Lines [id:da8190446038982127] 
+\draw    (259,584) -- (359,605) ;
+
+
+%Straight Lines [id:da8459756464497579] 
+\draw    (392,483) -- (471,440) ;
+
+
+%Straight Lines [id:da48257728570050773] 
+\draw    (471,440) -- (511,484) ;
+
+
+
+% Text Node
+\draw (392,348) node  [align=left] {Edge Contraction};
+% Text Node
+\draw (476,601) node  [align=left] {The subgraph has a cycle};
+
+
+\end{tikzpicture}
+
+\end{center}
+\caption{Edge contraction showing that having a $C_{3}$ minor implies cycle}
+\label{fig:Fig1}
+\end{figure}
+
+\end{proof}
+
+\begin{theorem}
+\label{thm:uniquePath}
+    Given a tree T and two vertices, u,v $\in V_{T}$, there exists a unique path from u to v in T.
+\end{theorem}
+
+\begin{proof}
+    We'll prove this by induction on length of the paths. All paths of length 1 are unique (as they are edges between the vertices).\\
+    Let $F(k)$ be the statement that all paths of size $k$ are unique between the vertices at their ends.\\
+    $\therefore F(1)$ is true\\
+    Let $F(i)$ be true for all $i$ from 1 to $m$\\
+    Let $u$ and  $v$ be the vertices with a path of length $m+1$. Let us assume that there are more than one path between them, namely $p$ and $q$.\\
+    \\
+    If $p$ and $q$ are disjoint, then $u\xrightarrow{p}v\xrightarrow{q}u$ forms a cycle. This is not allowed in a tree, so $p$ and $q$ are not disjoint.\\
+    Let $x$ be the common vertex between $p$ and $q$ paths. Length of $u$ to $x$ in $p$ must be $\leq m$. Therefore, $p[u\dots x]$ is the unique path from $u$ to $x$ as $F(i)$ is true for all $i$ from 1 to $m$.\\ 
+    This implies that,\\
+    \begin{equation}
+        \label{partialPathFirst}
+        q[u\dots x] = p[u\dots x]
+    \end{equation}
+    Similarly,
+    \begin{equation}
+        \label{partialPathSecond}
+        q[x\dots v] = p[x\dots v]
+    \end{equation}
+    From \ref{partialPathFirst} and \ref{partialPathSecond},\\
+    There is a unique path from $u$ to $v$ of size $m+1$, therefore $F(m+1)$ is true\\
+    By induction, we can say that $F(i)$ is true for all $i$ and a unique path exists between any two vertices of a tree.
+
+\end{proof}
+
+
+\begin{corollary}
+    Prove that no tree is 2 connected.
+    \begin{proof}
+        Let us assume that the tree is 2 connected. According to Menger's theorem, if the graph is 2 connected then there exists 2 disjoint paths from u to v where (u,v) $\in V_G$. However, a tree consists of a unique path between any two vertices (u,v), as per Theorem~\ref{thm:uniquePath}. This means our assumption was wrong and hence we have verified that no tree is 2 connected.
+    \end{proof}
+\end{corollary}
+
+
+\begin{corollary}
+    Removal of an edge in a tree will separate the graph.
+    \begin{proof}
+        We can prove this by contradiction. Let the edge being removed be $(u,v)$. Before the removal of this edge, the path from $u$ to $v$ was through edge $(u,v)$. Let us assume that the removal of this edge does not separate the graph. That would mean that $u$ and $v$ are still connected, which would mean that before the removal of the edge there was another path from $u$ to $v$, which did not include $(u,v)$. But by Theorem~\ref{thm:uniquePath}, we know that there is a unique path between any two vertices in a tree, so this cannot happen in this tree. Therefore, our assumption must be wrong and removal of this edge must separate the graph.
+    \end{proof}
+\end{corollary}
+
+\paragraph*{}
+\begin{definition}
+A leaf of a tree (graph) is a degree 1 vertex.
+\end{definition}
+
+\subparagraph{Note:}
+\begin{itemize}
+    \item On separating a leaf from a connected graph, we are still left with a connected graph.
+    \item A \textbf{star} has $n-1$ leaves and a \textbf{path} has $2$ leaves.
+\end{itemize}
+
+\begin{theorem}
+    Every tree with at least 2 vertices, has at least 2 leaves.
+    \begin{proof}
+        Let's consider the longest path, $P$ in the given tree. Let the end vertices of the path be $u$ and $v$. We'll prove that $u$ and $v$ are leaves. We'll prove this by contradiction.\\
+        Let us assume that $v$ is not a leaf. Then, its degree must be $\geq 2$ and it must have at least two adjacent vertices. Let them be $a$ and $b$. If $a$ is in $P$, then $b$ cannot be in $P$. This is because $v$ is the end point of $P$ and to travel to $b$ from $a$ without going through $v$ again, will lead to a cycle. Now consider the path $[b P]$. It is longer than $P$, which causes a contradiction, as $P$ is supposed to be the longest path. Therefore, our assumption must be wrong and $v$ must be a leaf. Similarly, we can prove that $u$ must be a leaf. Therefore, a tree has at least two leaves.
+    \end{proof}
+\end{theorem}
+
+\begin{theorem}
+    Prove every forest (with at least 2 vertices) is bipartite
+    \begin{proof}
+        This can easily be proved using Theorem \ref{thm:bipartiteNoOddCycle}, which states that if there are no odd cycles in a graph, it is bipartite. Forest is a graph with no cycle (therefore no odd cycles), so it must be bipartite.
+    \end{proof}
+\end{theorem}
+
+\begin{question}
+    How many edges can a tree with n vertices have?
+    \begin{proof}[Solution: ]\let\qed\relax
+        A tree with n vertices has exactly (n-1) edges.       
+    \end{proof}
+    \begin{proof}
+        We can prove this by induction. For a tree of size 2 (example $K_{2}$), there is 1 edge between the vertices.\\
+        Let $F(n)$ be the number of edges in a tree of size $n$.\\
+        $\therefore F(2) = 1\\$
+        Let,\\
+        \begin{equation}
+            \label{eq:assump}
+            F(i) = i-1 \phantom{x}\text{for all}\phantom{x} i\phantom{x} \text{from}\phantom{x} 2\phantom{x} \text{to}\phantom{x} k-1
+        \end{equation}
+        Consider a tree of size $k$. If we remove an edge from this tree, it gets divided into two trees of sizes $<k$. Let the sizes be $r$ and $s$. We can see that $r+s = k$ (as the number of vertices are the sames).\\
+        From equation \ref{eq:assump},
+        \begin{align*}
+            F(r) &= r-1\\
+            F(s) &= s-1
+        \end{align*}
+        Therefore, the total number of edges in the tree, $F(k) = F(r) + F(s) + 1 = r - 1 + s - 1 + 1 = r + s - 1 = k-1$\\
+        Therefore, by induction we can say that $F(n)=n-1$, i.e. in a tree of size $n$, there are $n-1$ edges.
+    \end{proof}
+\end{question}
+
+\begin{lemma}
+    For a forest with $C$ connected components and $N$ vertices, there are $N-C$ edges.
+\end{lemma}
+\begin{proof}
+    Let $S_{1}$, $S_{2}\dots S_{C}$ be the number of vertices in the trees of the forest.\\
+    \begin{equation}
+        \label{eq:sumOfTrees}
+        N=S_{1}+S_{2}\dots S_{C}
+    \end{equation}
+    \begin{align*}
+        \text{Number of edges} (E) &= S_{1}-1+S_{2}-1+\dots S_{C}-1\\
+        &= (S_{1}+S_{2}+\dots S_{C})-C\\
+        &= N-C \phantom{xxxxx}\text{(using \ref{eq:sumOfTrees})}
+    \end{align*}
+\end{proof}
+
+\paragraph{Euler invariant}
+
+\begin{equation*}
+    e(G) = |V_{G}| - |E_{G}|
+\end{equation*}
+$e(G)$ is the Euler invariant of a graph $G$. It is also a topological invariant.
+
+\end{document}
