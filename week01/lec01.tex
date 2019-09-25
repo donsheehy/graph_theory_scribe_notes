@@ -1,41 +1,32 @@
 \documentclass{article}
 
-\usepackage{amsmath,amssymb,amsthm,graphicx}
+\usepackage{amsmath,amssymb,amsthm,graphicx,stackengine}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
 
 \input{macros}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+ 
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
 
 \begin{document}
 
 
 %FILL IN THE RIGHT INFO.
 %\lecture{**LECTURE-NUMBER**}{**DATE**}{**SCRIBE**}
-\lecture{1}{Aug 21, 2019}{ Lauren Alvarez }
+\lecture{1}{Aug 21, 2019}{ Lauren Alvarez and Yunkai 'Kai' Xiao }
   % \title{Lecture 1}
   % \author{Scribed by: }
   % \maketitle
 
 \section{Pre-class logistics}
-\section{The Basics}
-Graphs are the most important abstraction in computation (after numbers and sets)
+This class is evaluated through
 \begin{itemize}
-    \item They describe binary relations (i.e. sets of pairs of things)
-    
-    \item As the name implies, we often draw graphs
-     \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.5\textwidth]{images/graphbasics.png}
-    \caption{The drawing is not the graph. It's only a picture.}
-    \label{fig:}
-\end{figure}
-    \item Graphs are everywhere
-       \begin{itemize}
-       \item Circuits
-       \item Networks
-       \item Roadmaps
-       \item Data Structures
-       \item ... and other less obvious settings as well
-       \end{itemize}
-     
+\item Quizzes and Tests: 70\% (In class quizzes x 6)
+\item Scribe Notes 30\%  (in team of 3)
 \end{itemize}
 
 \section{Introduction: What is graph?}
@@ -46,23 +37,68 @@ When we talk about graphs, we could first start with some of the basic building 
         1, 2
      \end{center}
     \item Set
-     \begin{center}
+     \begin{figure}[h]
+     \centering
       \includegraphics{images/set.png}
-     \end{center}
+      \caption{Set of numbers}
+      \label{fig:set}
+     \end{figure}
     \item Graph
-     \begin{center}
+     \begin{figure}[h]
+     \centering
       \includegraphics{images/graph.png}
-     \end{center}
+      \caption{Picture of a graph}
+      \label{fig:graph}
+     \end{figure}
 \end{itemize}
-
-\section{Definitions}
+What are some typical graphs? Someone may list the following:\par
+Computer Network, Circuit, Social Network, Recommending system, maps, Data Bases, Neural Networks, etc...\par
+And since we're computer scientists, what are some of the graph based algorithms?\par
+Dijkstra, Floyd, BFS, DFS, etc...\par
+Graphs are the most important abstraction in computation (after numbers and sets)
 \begin{itemize}
-    \item A \textbf{graph} is a pair (V,E) where V is any set and E is a set of 2-elements subset (``unordered pairs") of V
-    \item The set V is called the \textbf{vertex set} and its elements are called \textbf{vertices}
-    \item The set E is called the \textbf{edge set} and its elements are called \textbf{edges}
-    \item We often write \textit{G = (V,E)} to assign a name (G) to a graph (V,E)
-    \item We may also write \textit{V(G)} and \textit{E(G)} to refer to the vertex and edge sets of some given graph G
+    \item They describe binary relations (i.e. sets of pairs of things)
+    
+    \item As the name implies, we often draw graphs
+     \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/graphbasics.png}
+    \caption{The drawing is not the graph. It's only a picture.}
+    \label{fig:picture}
+    \end{figure}
 \end{itemize}
+The abstractions of many of these listing could be identified as graph, but what makes a graph graph? 
+
+\section{The Basics}
+\begin{definition}{Graph:}
+A \textbf{graph} is a pair (V,E) where V is any set and E \subseteq $\left( \stackanchor{V}{2} \right)$. Elements of V are called \textbf{Vertices} (singular: vertex), elements of E are called \textbf{Edges}
+\end{definition}
+in this definition, we used some notations, of V and E, here we define if two vertices a and b belongs to V, then we have $a, b \in V$, and $(a, b) \in E$, sometimes people use other notations, and they are equivalent: $\{a, b\} = (a, b) = (b, a)$
+
+As you might have discovered, we treat (a, b) and (b, a) as the same. In this semester we will be studying specifically undirected graphs, specifically we would be focusing on un-directed graphs without self loops, there could only be one edge between two given vertices.
+
+\pagebreak
+
+As you could see in Figure \ref{fig:picture}, some graphs could be drawn on a 2D plane, making it easier for people to visualize, however one have to know that these visualizations are not graphs, graphs are mathematical abstractions of vertices, edges, and relationships. In this sense, we always represent graphs in this notation:
+
+$$G = (V,E) = (\{a, b\}, \{(a, b), (b, c)\})$$
+
+\begin{definition}{Adjacent and Incident:}
+Two vertices a and b are \textbf{adjacent} if $(a, b) \in E$ (if there's an edge connecting them); A vertex v is \textbf{incident} to edge e if $v \in e$, in the same sense e is incident to v at the same time.
+\end{definition}
+If we formulate incident, it would be written in this way: 
+$$G = (V, E)$$
+$$I = (V \cup E, \{ (v,e) | e \in E \& v \in V\})$$
+
+\begin{definition}{Degree:}
+The degree of a vertex $v \in V$ is the number of edges incident to v
+\end{definition}
+
+Some fun fact about this is that, in a graph we have:
+
+$$\sum_{v \in V} deg(v) = 2|E|$$
+
+Because for each edge, there will always be 2 vertices on each end of the edge.
 
 \subsection{Examples}
 \includegraphics[width=0.75\textwidth]{images/examples.png}
@@ -82,29 +118,42 @@ $E(G_2) = \{\{1,2\}\}$
 \textit{Notation: It's easier to write (a,b) instead of \{a,b\}. In this case, it's assumed (a,b) = (b,a). }
 
 \begin{itemize}
-    \item Two vertices u,v are \textbf{adjacent} if $(u,v) \epsilon E$
-    \item An edge e and a vertex v are \textbf{incident} if $v \epsilon e$ (i.e. $e = (u,v)$ for some $u \epsilon V$
+    \item Two vertices u,v are \textbf{adjacent} if $(u,v) \in E$
+    \item An edge e and a vertex v are \textbf{incident} if $v \in e$ (i.e. $e = (u,v)$ for some $u \in V$
     \item The number of edges incident to a vertex v is called a degree of v, and is written \itemit{deg(v)}
 \end{itemize}
-\subsection{Exercise}
- Prove $$\sum_{v \epsilon V} deg(v) = 2|E|$$ for any graph (V,E)
+
  
- 
- \section{Graph Questions}
+ \section{Questions could be asked(and you should care)about a graph}
  \begin{enumerate}
   \item Is it connected? (i.e. is it all one piece)
   \item Does the graph have any cycles?
   \item What is the shortest path form one vertex to another?
   \item Can we assign a small number of colors to the vertices so that no two adjacent vertices have the same color?
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/4color.png}
+    \caption{Is 4 color always enough to color a map?}
+    \label{fig:4color}
+    \end{figure}
   \item Can we draw the graph so that no two edges cross?
-  \item Is one graph ``equal" to another (allowing the vertices to be relabelled)
-  \item Does one graph contain another graph (or its equivalent)?
+  \item Is one graph ``equal" [isomorphic] to another (allowing the vertices to be relabelled)
+  \begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/isomorphic.png}
+    \caption{Graphs with different labels could still be isomorphic.}
+    \label{fig:isomorphic}
+    \end{figure}
+  \item Does one graph contain another graph (or its equivalent)? [subgraph isomorphism is a NP complete problem]
   \item How quickly will a random walk on a graph mix?
   \item How many spanning trees (minimally connected subgraphs using all the vertices) does a graph contain?
 \end{enumerate}
 
+In general, graph theory would research into combinatorial questions such as 1~3, topological questions such as 4~5, computational questions such as 6~7 as well as algebraic questions such as 8
+
+
 \section{Different Perspective on Graphs}
-Combinatorics, Computation, Geometry, Topology, Algebra. As much as possible, we will try to represent these different perspectives as \textbf{categories} and our change of perspective as \textbf{functions}. I will tell you what these words mean.
+combinatorial, Computation, Geometry, Topology, Algebra. As much as possible, we will try to represent these different perspectives as \textbf{categories} and our change of perspective as \textbf{functions}. I will tell you what these words mean.
 
 \subsection{Sets and Functions}
 \textit{This should all be review I will use all these concepts, definitions, and notation will reckless abandonment.}
@@ -114,12 +163,19 @@ You should know:
 \begin{enumerate}
     \item \underline{What is a set?} 
     
-    Elements, Membership, Empty Set ($\O$), Cardinality
+    Elements, Membership, Empty Set ($\O$), Cordiality
     \item \underline{Set Relations and Elements}
     
-    $a \epsilon S$ ``a is in S" or ``a is an element of S"
+    $a \in S$ ``a is in S" or ``a is an element of S"
     
-    $A \subset B$, $A \subseteq B$, $A = B$
+    $A \subset B$, $A \subseteq B$, $A = B$; subset, strict subset, and equality
+    
+    Note that if $A \subseteq B$ and $B \subseteq A$ then $A = B$
+    
+    Sometimes a set could also be written in mathematical formulations, for example:
+    
+    $$\{a \in \mathbb{Z} | a \equiv 3\ mod\ 5\}$$
+    
     \item \underline{Set Operations}
     
     Union: $A \cup B$ 
