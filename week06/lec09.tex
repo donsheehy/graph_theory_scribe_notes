@@ -33,7 +33,7 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
     Consider a vertex $a \hspace{2pt} \epsilon \hspace{2pt} T_{j,k}$ in the form
     $(m,n)$ where $m \hspace{2pt} \epsilon \hspace{2pt} (0, 1, ... j-1)$ and $n \hspace{2pt} \epsilon \hspace{2pt} (0, 1, ... k-1)$. \\
 
-    Its four adjacent vertices in the Torus graph would be
+    Its four adjacent vertices in the Torus graph would be :
     \begin{align*}
         ((m+1)\%j, n) \\
         ((m-1)\%j, n) \\
@@ -43,27 +43,26 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
 
     Consider any other vertex $b \hspace{2pt} \epsilon \hspace{2pt} T_{j,k}$ in the form $((m+x) \% j,(n+y) \% k)$. Changing $x$ and $y$, we get every other vertex in $T_{j,k}$.
 
-    Consider the function $f$ that maps from $a$ to $b$ as 
+    Consider the function $f$ that maps from $a$ to $b$ :
     \begin{align*}
      f(a) = b
     \end{align*}
 
-    then the following also holds true for its adjacent vertices:
+    then the following also holds true for its adjacent vertices :
     \begin{align*}
         f(((m+1)\%j, n)) = (((m+1)+x)\%j, n+y) = (((m+x)+1)\%j, n+y) \\
         f(((m-1)\%j, n)) = (((m-1)+x)\%j, n+y) = (((m+x)-1)\%j, n+y) \\
         f((m, (n+1)\%k)) = (m+x, ((n-1)+y)\%k) = (m+x, ((n+y)-1)\%k) \\
-        f((m, (n+1)\%k)) = (m+x, ((n+1)+y)\%k) = (m+x, ((n+y)+1)\%k) \\
+        f((m, (n+1)\%k)) = (m+x, ((n+1)+y)\%k) = (m+x, ((n+y)+1)\%k)
     \end{align*}
-
     From above, we can see that there is a bijective mapping, which when applied to $a$'s adjacent vertices, gives us $b$'s adjacent vertices. Since b is any vertex in the Torus graph, $T_{j,k}$, we can conclude that for any pair of vertices $a,b \in V_{T_{j,k}}$, there exists an isomorphism $f:T_{j,k} \to T_{j,k}$ such that $f(a) = b$.
 \end{proof}
-
+\pagebreak
 \begin{question}
     Prove that $T_{3,3}$ is $4$-connected
     \end{question}
 \begin{proof}
-    To prove that the graph is 4-connected, we need to show that $\forall u,v\hspace{2pt}\epsilon \hspace{2pt}$ $V_G$, $\exists$ four disjoint paths from $u$ to $v$.\\
+    We need to show that for all $u,v\hspace{2pt}\epsilon \hspace{2pt}$ $V_G$, there exist four disjoint paths from $u$ to $v$.\\
     From the symmetry in the Isomorphism of the \textit{Torus Graph} shown in the above question, we are left with just\\
     two cases to prove that it is 4-connected.
     \begin{case}
@@ -143,7 +142,7 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
     In \textbf{Case 1}, the four different colors show the four disjoint paths to reach from vertex 1 to vertex 5.\\
     In \textbf{Case 2}, the four different colors show the four disjoint paths to reach from vertex 1 to vertex 2.\\
 
-    $\therefore \text{, From the above two diagrams it is easily observed that in both the cases, we are able to get four different paths that }$
+    $\therefore \text{From the above two diagrams it is easily observed that in both the cases, we are able to get four different paths that }$
     have no shared vertices (except the ends) from
     \text{source to destination.}\\
     \\This is another way of defining that the \textit{Torus Graph} $T_{3,3}$ is $4$-connected.
@@ -176,56 +175,11 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
     \end{gather*}
     We know that $((a+1)\% 3, b \% 3) \hspace{2pt} \epsilon \hspace{2pt} T_{3, 3}$ and $(a \% 3, (b+1)\%3) \hspace{2pt} \epsilon \hspace{2pt} T_{3, 3}$
     
-    $\implies \text{Hence, there exists a morphism from $T_{j,k}$ to $T_{3,3}$}$.
-    
-    \begin{center}
-    
-    \begin{tikzpicture}[every node/.style={draw,circle,minimum size=7mm}]
-    
-    \node (20) at (0,0) {20};
-    \node (21) at (2,0) {21};
-    \node (22) at (4,0) {22};
-    \node (10) at (0,2) {10};
-    \node (11) at (2,2) {11};
-    \node (12) at (4,2) {12};
-    \node (00) at (0,4) {00};
-    \node (01) at (2,4) {01};
-    \node (02) at (4,4) {02};
-    \node (03) at (6,4) {03};
-    \node (04) at (8,4) {04};
-    \node (05) at (10,4) {05};
-    \node (13) at (6,2) {13};
-    \node (14) at (8,2) {14};
-    \node (15) at (10,2){15};
-    \node (23) at (6,0) {23};
-    \node (24) at (8,0) {24};
-    \node (25) at (10,0){25};
-    
-    \draw[thick] (20) -- (21) -- (22)--(23) -- (24) -- (25) ;
-    \draw[thick] (10) -- (11) -- (12)-- (13) -- (14) -- (15) ;
-    \draw[thick] (00) -- (01) -- (02) -- (03) -- (04) -- (05);
-    \draw[thick] (20) -- (10) -- (00) ;
-    \draw[thick] (21) -- (11) -- (01) ;
-    \draw[thick] (22) -- (12) -- (02) ;
-    \draw[thick] (23) -- (13) -- (03) ;
-    \draw[thick] (24) -- (14) -- (04) ;
-    \draw[thick] (25) -- (15) -- (05) ;
-    
-    
-    \draw   (00) to[out=80,in=-80] (20);
-    \draw   (03) to[out=80,in=-80] (23);
-    \draw   (04) to[out=80,in=-80] (24);
-    \draw   (05) to[out=80,in=-80] (25);
-    \draw   (01) to[out=80,in=-80] (21);
-    \draw   (02) to[out=80,in=-80] (22);
-    \draw   (00) to[out=170,in=10] (05);
-    \draw   (10) to[out=170,in=10] (15);
-    \draw   (20) to[out=170,in=10] (25);
-    \end{tikzpicture}
-    \end{center}
+    $\implies \text{There exists a morphism from $T_{j,k}$ to $T_{3,3}$}$.
+   % 
+
 \end{proof}
-
-
+\pagebreak
 \begin{question}
     Prove that if $j\ge 3$ and $k\ge 3$, then $T_{j,k}$ contains a $T_{3,3}$ topological minor.  Recall that this means there is a subgraph of $T_{j,k}$ that can be transformed into $T_{3,3}$ by contracting paths of degree 2 vertices (i.e. induced paths) into a single edge.
 \end{question}
@@ -284,10 +238,10 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
 \draw   (20) to[out=170,in=10] (25);
 \draw   (30) to[out=170,in=10] (35);
 \end{tikzpicture}
-\captionof{figure}{\textbf{Torus Graph $T_{4,6}$ }}
+\captionof{figure}{\text{Torus Graph $T_{4,6}$ }}
 \end{center}
     For $T_{4,6}$ to contain a $T_{3,3}$ topological minor, we first have to take a subgraph of $T_{4,6}$. This is done to obtain vertices of degree 2.\\ \\
-    For any general $T_{j,k}$, we apply the following three operations to obtain our subgraph: \\
+    For any general $T_{j,k}$, we apply the following three operations to obtain our subgraph:
     \begin{enumerate}
         \item For $x\ge0$ and $y\ge3$,  \\
         Remove edge between vertices (x,y) and (x+1\%j,y)
@@ -336,6 +290,7 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
 \draw   (10) to[out=170,in=10] (15);
 \draw   (20) to[out=170,in=10] (25);
 \end{tikzpicture}
+\captionof{figure}{\text{The above subgraph of $T_{4,6}$ is obtained by doing above operations }}
 \end{center}
     Now from the subgraph, we obtain the desired minor by contracting paths of degree 2 vertices into a single edge.\\
     This is done by applying the following 2 operations:\\
@@ -343,7 +298,7 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
         \item Contract Path $P_1$ = $\{(x,2),(x,3)\dots(x,k-1),(x,0)\}$ to the Edge $\{(x,2),(x,0)\}$, for x $\epsilon$ $\{0,1,2\}$
         \item Contract Path $P_2$ = $\{(2,y),(3,y)\dots(j-1,y),(0,y)\}$ to the Edge $\{(2,y),(0,y)\}$, for y $\epsilon$ $\{0,1,2\}$
     \end{enumerate}
-    
+    \pagebreak
     Resulting graph is the Graph $T_{3,3}.$\\
     
     \begin{center}
@@ -372,6 +327,7 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
 \draw   (10) to[out=170,in=10] (12);
 \draw   (20) to[out=170,in=10] (22);
 \end{tikzpicture}
+\captionof{figure}{\text{$T_{3,3}$ topological minor in $T_{j,k}$}}
 \end{center}
     $\implies \text{Any Graph $T_{j,k}$ with $j\ge3$ and $k\ge3$ contains a $T_{3,3}$ minor }$
 \end{proof}
@@ -403,7 +359,9 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
             \draw[thick] (1) -- (2) ;
             \draw[thick] (b) -- (a) ;
             \end{tikzpicture}
+            \captionof{figure}{\text{Two $K_2$ Graphs}}
             \end{center}
+            \pagebreak
             Below is their Cartesian Product.
             
             \begin{center}
@@ -421,8 +379,9 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
             \draw[thick] (a1) -- (b1) -- (b2) -- (a2)--(a1) ;
             \draw[thick] (b) -- (a) ;
         \end{tikzpicture}
+        \captionof{figure}{\text{$C_4$ Graph obtained from $K_2$ X $K_2$ }}
     \end{center}
-    We can see that the resulting graph is a $C_4$.
+    $\therefore \text{We can see that the resulting graph is a $C_4$.}$\\
 \end{proof}
 
 \begin{question}
@@ -447,6 +406,7 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
 \draw[thick] (1) -- (2) ;
 
 \end{tikzpicture}
+\captionof{figure}{\text{$C_3$ and $K_2$}}
 \end{center}
 \vspace{8pt}  
 \begin{center}
@@ -473,11 +433,12 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
 \draw[thick] (b1) -- (b2) ;
 \draw[thick] (c1) -- (c2) ;
 \end{tikzpicture}
+\captionof{figure}{\text{$C_3$  X $K_2$}}
 \end{center}\
     
-    
+    \pagebreak
     The resulting graph can be drawn in the plane without crossing. \\
-    We can also see that this Graph does not contain any $K_{3,3}$ or $K_5$ minors or equivalently no $K_{3,3}$ or $K_5$ topological minors. From \textbf{Kurtowski's Theorem}, we have that the Graph is planar.
+    \\ We can also see that this Graph does not contain any $K_{3,3}$ or $K_5$ minors or equivalently no $K_{3,3}$ or $K_5$ topological minors. From \textbf{Kurtowski's Theorem}, we have that the Graph is planar.\\
 \end{proof}
 
 
@@ -500,9 +461,7 @@ The \textit{Torus Graph} $T_{j,k}$ is a $j \times k$ grid with extra edges conne
         \item If we take the pre-image of any vertex $a \hspace{2pt} \epsilon \hspace{2pt} A$, then we get the set
     $\{ (a,b) \hspace{2pt}|\hspace{2pt} b \hspace{2pt} \epsilon \hspace{2pt} V_B \}$. From the definition of the Cartesian product and the fact that $B$ is connected, we can conclude that the pre-image is also connected.
     \end{enumerate}
-    
 \end{proof}
-
 
 \begin{question}
     Show that $C_j \times C_k \cong T_{j,k}$
@@ -552,6 +511,7 @@ For example, consider Graphs $C_3$ and $C_4$. Their Cartesian product is shown b
 
 \draw   (a) to[out=170,in=10] (d);
 \end{tikzpicture}
+
 \end{center}
 
 
@@ -591,9 +551,9 @@ For example, consider Graphs $C_3$ and $C_4$. Their Cartesian product is shown b
 \draw   (a2) to[out=170,in=10] (d2);
 \draw   (a1) to[out=170,in=10] (d1);
 \end{tikzpicture}
+\captionof{figure}{\text{$C_3$ and $C_4$ gives $C_3$ X $C_4$}}
 \end{center}
-
-$\therefore$ Every vertex in $C_j \times C_k$ is connected to its four neighbours in a cyclic fashion which is nothing but the Torus graph $T_{j,k}$
+$\therefore$ Every vertex in $C_j \times C_k$ is connected to its four neighbours in a cyclic fashion which is nothing but the Torus graph $T_{j,k}$.
 \end{proof}
 
 
@@ -619,32 +579,30 @@ Let $W$ be the edges of a walk from $a$ to $b$ that does not repeat any edges.\\
     \end{enumerate}
     The Graph $G'$ may now have one or more connected components.\\
     Let us consider two cases depending upon where $c$ and $d$ are located.\\
-    \begin{case}
+    \\ \textbf{Case 1.}
         If $c$ and $d$ are part of different (connected)components.\\
         \\
         Let us assume that $c$ and $d$ are in fact not in the same connected component. We prove by contradiction using \textit{Handshake Lemma} that this case is not possible. 
         
-        \begin{lemma}  \textit{Handshake Lemma}\\
+        \textbf{Lemma.}  \textit{Handshake Lemma}\\
             Number of vertices of odd degree in a graph is even
-        \end{lemma}
+        
         
         If one connected component has vertex $c$ but not $d$, this would mean that $c$ is the only vertex of that connected component with odd degree, while all other vertices are of even degree.\\
         \textit{Handshake Lemma} clearly states that this is not possible.\\
         \\
-    \end{case}
-    \begin{case}
+    \textbf{Case 2.}
         If $c$ and $d$ are part of the same (connected)component.\\
         \\
         In this case, $c$ and $d$ are the only odd degree vertices of the component, while all other vertices have even degree.\\
-        By \textbf{Euler's Theorem}, $\exists \text{ an Euler Walk from $c$ to $d$.}$
+        By \textbf{Euler's Theorem}, there exists \text{ an Euler Walk from $c$ to $d$.}
         \\
         $\implies \text{$c$ and $d$ are connected.}$
-    \end{case}
     
 
     $\therefore \text{Only Case 2 is possible.\\ Vertices $c$ and $d$ are connected.}$
 \end{proof}
-
+\pagebreak
 \begin{question}
     Suppose that $W$ is the longest such walk and that $G$ is connected.  Prove that in this case, $G'$ is connected.
 \end{question}
@@ -675,8 +633,8 @@ Let $W$ be the edges of a walk from $a$ to $b$ that does not repeat any edges.\\
 \draw[thick] (b) -- (a);
 
 \draw[thick] (c) -- (d);
-
 \end{tikzpicture}
+\captionof{figure}{Graph $G$}
 \end{center}
     The longest walk, $W$ from $a$ to $b$ can be denoted by the sequence of vertices ($a$,$b$,$u$,$a$,$c$,$v$,$d$,$b$).\\
     \\
@@ -693,6 +651,7 @@ Let $W$ be the edges of a walk from $a$ to $b$ that does not repeat any edges.\\
 \draw[thick] (c) -- (d);
 
 \end{tikzpicture}
+\captionof{figure}{Graph $G'$}
 \end{center}
 
     Every time, we do this operation of removing the longest walk, we will get only one connected component.\\
@@ -701,16 +660,13 @@ Let $W$ be the edges of a walk from $a$ to $b$ that does not repeat any edges.\\
 \begin{enumerate}
     \item First component would have both vertices $c$ and $d$ together. This was shown in the previous question using the \textit{Handshake Lemma}.
     \item Second, or any other, component would have all vertices with even degree.\\
-    By \textbf{Euler's Theorem}, we know that a connected Graph with all even degree vertices has an \textit{Euler Tour.}\\
-    This is contradiction to the fact that we've chosen the longest walk.
+    By \textbf{Euler's Theorem}, we know that a connected Graph with all even degree vertices has an \textit{Euler Tour.} This is contradiction to the fact that we've chosen the longest walk. We could've added the Euler Tour to the existing walk and gotten an even longer walk.
     \end{enumerate}
-    
-    \text{[NOTE : We could've added the Euler Tour to the existing walk and gotten an even longer walk.]}
 
     $\implies \text{There is only one connected component in $G'$ and therefore, $G'$ is a connected Graph.}$\\
     \\
 \end{proof}
-
+\pagebreak
 \begin{question}
     Prove that if $G$ is connected, then there is a pair of walk that don’t repeat any edges, don’t have any edges in common, and together, touch every edge of $G$.
 \end{question}
