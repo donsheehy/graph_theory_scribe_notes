@@ -28,7 +28,7 @@
     \\\\
     Let us assume that $w \neq x$ without any loss of generality.
     \\\\
-    So $\exists$  path from $b$ to $x$ in $G \backslash \{ z,v,w \}$ where $b$ can be any vertex in the piece B.
+    So there exists a path from $b$ to $x$ in $G \backslash \{ z,v,w \}$ where $b$ can be any vertex in the piece B.
     \\\\
     We can see that the component of $G \backslash \{ z,v,w \}$ that does not contain $x$ or $y$ is a subset of A.
     \\\\
@@ -41,12 +41,12 @@
     \centerline{\includegraphics[width=7in]{Images/Fary.jpg}} 
     \newpage
     \section*{Kuratowski/Wagner theorem for 3-connected graphs : }\begin{lemma}
-        If a graph $G$ is 3-connected and does not contain $k_{5}$ and $k_{3,3}$ minors, then $G$ is planar 
+        If a graph $G$ is 3-connected and does not contain $k_{5}$ and $k_{3,3}$ minors, then $G$ is planar. 
     \end{lemma}
     \subsubsection*{\underline{\textbf{Proof of Lemma 2}} :}
-    $\exists e = (x,y)$ such that $G \backslash e$ is also 3-connected.
+    There exists an edge $e = (x,y)$ such that $G \backslash e$ is also 3-connected.
     \\\\
-    By induction $\exists$ an embedding of $G \backslash e$.
+    By induction there exists an embedding of $G \backslash e$.
     \\\\
     Now if we remove the contracted edge, the result is 2-connected where every face is a cycle.
     \\\\
@@ -64,7 +64,7 @@
     \\\\
     \centerline{\includegraphics[width=6in]{Images/k3,3.jpg}}
     \\\\
-    So finally we can have a cycle where all neighbours of vertex $x$ are followed by all neighbours of vertex $y$ and they might overlap where they meet as shown in following figure. (It is not necessary that all of the vertices on the cycle are neighbours of either vertex $x$ or vertex $y$)
+    So finally, we can have a cycle where all neighbours of vertex $x$ are followed by all neighbours of vertex $y$ and they might overlap where they meet as shown in following figure. (It is not necessary that all of the vertices on the cycle are neighbours of either vertex $x$ or vertex $y$)
     \\\\
     \centerline{\includegraphics[width=3in]{Images/final_lemma_2.JPG}}
     So we can say that if the graph is 3-connected and does not have $k_{5}$ and $k_{3,3}$ minors then it is definitely planar !
@@ -82,39 +82,39 @@
     \newpage
     \underline{\textbf{Claim}} : If a graph has no $k_{5}$ and $k_{3,3}$ minors and is 1-connected, then it is planar. 
     \\\\
-    \underline{\textbf{Proof}} : If the graph is 1-connected then it  can be divided into 2 sub-graphs (A and B) with one vertex as common as shown in the figure. By induction each of the sub-graph has an embedding and in the end we can just glue them together at the common vertex in a bigger embedding.  
+    \underline{\textbf{Proof}} : If the graph is 1-connected, then it  can be divided into 2 sub-graphs (A and B) with one vertex as common as shown in the figure. By induction each of the sub-graph has an embedding and in the end we can just glue them together at the common vertex in a bigger embedding.  
     \\\\
     \centerline{\includegraphics[width=4in]{Images/1conngrapg.PNG}}
     \\\\
     \underline{\textbf{Claim}} : If a graph has no $k_{5}$ and $k_{3,3}$ minors and is 2-connected, then it is planar. 
     \\\\
-    \underline{\textbf{Proof}} : If the graph is 2-connected then it  can be divided into 2 sub-graphs (A and B) with one edge in common as shown in the figure. Now we can contract $B \backslash \{x,y\}$ to $x$. The resulting graph has fewer vertices than original and if the original did not contain edge $(x,y)$, the new graph will have one. We can do the same thing where we contract $A \backslash \{x,y\}$ to x. Now we can embed these two newly formed graphs and glue them together at edge $(x,y)$. Also it is always possible to glue them together at edge $(x,y)$ because for both graphs we can select an outer face which contains the edge $(x,y)$.
+    \underline{\textbf{Proof}} : If the graph is 2-connected, then it can be divided into 2 sub-graphs (A and B) with one edge in common as shown in the figure. Now we can contract $B \backslash \{x,y\}$ to $x$. The resulting graph has fewer vertices than original and if the original did not contain edge $(x,y)$, the new graph will have one. We can do the same thing where we contract $A \backslash \{x,y\}$ to x. Now we can embed these two newly formed graphs and glue them together at edge $(x,y)$. Also, it is always possible to glue them together at edge $(x,y)$ because for both graphs we can select an outer face which contains the edge $(x,y)$.
     \\\\
     \centerline{\includegraphics[width=4in]{Images/2conngraph.PNG}}
     \newpage
     \section*{Duals of a planar graph : }
-    First let's talk about the map coloring problem. The problem states that is it possible to color every region of a map such that no to neighbouring region are colored with the same color?
+    First let's talk about the map coloring problem. The problem asks if it is possible to color every region of a map such that no two neighbouring region are colored with the same color.
     \\\\
     The map coloring theorem states that we can always do it by using at most 4 colors.Though it might not be possible if we have a disconnected region or when the dual of the map is not planar. 
     \\\\
     We can create a dual of a map by having one vertex per region of the map and having edges between adjacent regions. This is shown in following figure  :
     \\\\
     \centerline{\includegraphics[width=6in]{Images/map_coloring.JPG}}
-    (Here we have not considered a vertex for the outermost unbounded region but for duals of graphs which we will see later, that has to be considered !)
+    (Here we have not considered a vertex for the outermost unbounded region but for duals of graphs which we will see later, that has to be considered!)
     \\\\
-    If the dual of a map is not planar then we cannot color the whole map using at most 4 different colors.
+    If the dual of a map is not planar, then we cannot color the whole map using at most 4 different colors.
     \\\\
     Consider following figure : 
     \\\\
     \centerline{\includegraphics[width=6in]{Images/dual_1.JPG}}
-    Here we can see that the dual of dual for a 2-connected graph does not necessarily gives us the original graph from which we started.
+    Here we can see that the dual of the dual for a 2-connected graph does not necessarily gives us the original graph from which we started.
     \\\\
     Suppose we allow multiple edges between vertices i.e. let us assume that a multigraph is possible.
     \\\\
     \centerline{\includegraphics[width=6in]{Images/dual_2.JPG}}
     As we can see in above picture that if we allow multiple edges, we can get the same graph back by dualing twice.
     \\\\
-    Now let's talk about duals for 3-connected planar graphs. A primal is the graph that we originally started with and a dual is the graph that we end up after performing the dual operation. For a 3-connected planar graph the faces in primal are one to one mapped to vertices in dual, vertices in primal are one to one mapped to faces in dual and as euler's formula holds true the edges in primal are one to one mapped to edges in dual. Also if we apply dual operation again to the obtained dual graph, then we get back the graph that we started with i.e. the primal graph.
+    Now let's talk about duals for 3-connected planar graphs. A primal is the graph that we originally started with and a dual is the graph that we end up after performing the dual operation. For a 3-connected planar graph, the faces in the primal are one to one mapped to vertices in the dual, vertices in the primal are one to one mapped to faces in the dual, and, as euler's formula holds true, the edges in the primal are one to one mapped to edges in the dual. Also if we apply the dual operation again to the obtained dual graph, then we get back the graph that we started with i.e. the primal graph.
     \begin{align*}
         &\text{V = vertices in primal ,  V' = vertices in dual} \\
         &\text{F = faces in primal ,  F' = faces in dual} \\
@@ -129,7 +129,7 @@
     \\\\
     \centerline{\includegraphics[width=5in]{Images/cube_graph.JPG}}
     \\\\
-    Now if we turn this relation in above figure upside down we get a dual which will have a one to one relationship with it's primal i.e. the cube graph for vertices, edges and faces as seen above in equations (1),(2) and (3).
+    Now if we turn this relation in the above figure upside down, we get a dual which will have a one to one relationship with it's primal i.e. the cube graph for vertices, edges, and faces as seen above in equations (1),(2) and (3).
     \\\\
     The dual of cube graph above is : 
     \\\\
@@ -141,9 +141,9 @@
     \\\\
     \centerline{\includegraphics[width=7in]{Images/forcegraph.png}}
     \\\\
-    Here the diagram depicts the forces in equilibrium acting on an object and these forces can be rearranges to form a force polygon. 
+    Here the diagram depicts the forces in equilibrium acting on an object and these forces can be rearranged to form a force polygon. 
     \\\\
-    Further, when the forces are applied to a point where the forces are not is equilibrium then the force can be arranged in the form of a polygon, but here the forces are directing to a point as the forces are not in equilibrium.
+    Further, when the forces are applied to a point where the forces are not is equilibrium, then the forces can be arranged in the form of a polygon, but here the forces are directing to a point as the forces are not in equilibrium.
     \\\\
     \centerline{\includegraphics[width=7in]{Images/forcegraphext.jpg}}
     \\\\
