@@ -1,6 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath, amssymb, amsthm, graphicx, float}
-\usepackage{subcaption, mleftright}
+\usepackage{subcaption, mleftright, tikz}
+\usetikzlibrary{arrows, shapes}
 
 \input{../macros}
 \newtheorem{lemma}{Lemma}
@@ -26,11 +27,12 @@ We then solve
 which is still symmetric and P.D. and return $x = P^\top y$.
 This reordering can sometimes dramatically improve the performance.
 
-\subsection{Finding a Good Ordering}
+\section{Finding a Good Ordering}
+
+\input{figures/fig1}
+
 For some ordering $v_1,\ldots, v_n$ on the vertices of a graph $G$ let $G_i$ be the graph after vertices 1-$i$ are eliminated.
-The \emph{fill graph} is the graph with the same vertex set and all of the edges resulting from contractions:
-\[ G^+ = (\{1,\ldots, n\}, \bigcup_{i=1}^n E_{G_i}). \]
-These edges are referred to as the \emph{fill edges} $E^+$.
+The \emph{fill graph} is the graph $G^+ = (\{1,\ldots, n\}, E^+)$ with the same vertex set and all of the \emph{fill edges} $E^+ = \bigcup_{i=1}^n E_{G_i}$ resulting from eliminations.
 For a given ordering we would like to minimize the number of fill edges.
 
 We will build an \emph{elimination tree} rooted on the last vertex eliminated $v_n$.
@@ -61,24 +63,24 @@ We define $m(b, c) = (a, c)$ where $a$ is the minimal descendant of $b$ in the e
 \section{Nested Dissection}
 
 In nested dissection a separator $C$ is used between subgraphs $A$ and $B$ to order eliminations.
-That is, a vertex set $V$ is broken as the disjoint union $V = A\sqcup B\sqcup C$ and the seperator order is $\mathrm{order}(V) = (\mathrm{order}(A), \mathrm{order}(B), C)$.
+That is, a vertex set $V$ is broken as the disjoint union $V = A\sqcup B\sqcup C$ and the separator order is $\mathrm{order}(V) = (\mathrm{order}(A), \mathrm{order}(B), C)$.
 If we build an elimination tree from this ordering we will have a tree of separators connected into separators of subgraphs.
-We can group vertices in an elimination tree where the high level is the separator tree.
+We can group vertices in an elimination tree where the separator tree is given by grouping the vertices by separator.
+% That is, the separator tree is the elimination tree grouped by separator.
+% The cross of vertices cut out of the graph in a separator gives an elimination tree, each of the four branches ends at the root of a smaller elimination tree for a sub-separator (see Figure).
 
-In the case of a grid...\textbf{TODO}
-Total height $4\sqrt{n}$.
+In the case of a grid with $n$ vertices has $2\sqrt{2}$ vertices in the separator, decreasing geometrically as we move down the separator tree for a total height of $4\sqrt{n}$.
 Each fill edge in the elimination tree is along a path between the vertices of the corresponding edge that gets ``charged'' in the initial graph.
-The length of this path is at most the depth of the tree.
+The length of this path is at most the height of the tree.
+That is, an edge in the initial graph cannot be charged more than the height of the tree.
 
 In the top level separator there are $2\sqrt{n}$ vertices and height at most $4\sqrt{n}$.
-So every vertex in the separator has degree at most $4$ in $E$.
-So there are at most $32 n$ fill edges in the top-level separator, reducing geometrically as we move down the tree.
+So every vertex in the separator has degree at most $4$ in $E$, and each descendant pays the height of the tree for a total of $2\sqrt{n}\cdot 4\cdot 4\sqrt{n} = 32 n$ fill edges in the top-level separator, reducing geometrically as we move down the tree.
 We can write the following recurrence relation
 \[ f(n)\leq 32n + 4 f(n/4) \]
 which gives $O(n\log n)$ fill edges.
 
-We will fill with nested dissection in $O(n\log n)$.
-If every seperator has ...
+\section{Perfect Elimination Graphs}
 
 A \emph{perfect elimination graph} is a graph $G=(V,E)$ such that there exists an ordering of $V$ such that no new fill edges are introduced in the elimination tree.
 That is, for each vertex removed there exist edges between all of its neighbors in $E$.
@@ -88,33 +90,34 @@ Examples of perfect elimination graphs include trees and triangulated polygons.
     A \emph{chordal graph} is a graph $G$ such that every induced cycle of $G$ is $K_3$.
 \end{definition}
 
+\input{figures/fig3}
+
 We can glue graphs along shared $k$-cliques using the \emph{$k$-clique sum}, depicted in Figure.%~\ref{}
-Note that clique sums of cliques is always a chorded graph.
-Note that $A_i\cap G_{i-1}\subseteq A_j$ for some $j < i$.
+Note that the clique sum of chordal graphs is chordal.
+Moreover, every chordal graph can be constructed in this way by iteratively gluing chordal subgraphs.
+Further note that $A_i\cap G_{i-1}\subseteq A_j$ for some $j < i$.
 In other words, every clique in $G_i$ is contained in $A_j$ for some $j\leq i$.
 
 We can think of the gluing of cliques as edges in a tree with cliques as vertices.
 For an ordered set of cliques $A_1,\ldots, A_r$ and $G_i = G_{i-1} + A_i$ we define a tree with vertex set $V=\{A_1,\ldots, A_r\}$ rooted at $A_1$ such that the parent of all other nodes in the tree is the clique $\mathrm{parent}(A_i) = A_j$ such that $A_i\cap G_{i-1} \subseteq A_j$ and $j < i$.
-We note that every chordal graph can be constructed in this way.
-$A_r$ is a leaf in the tree.
-If this vertex is removed all its neighbors are in the corresponding clique - contains $r\in G_{r-1}$.
-
-Note that we have no new fill because... cliques.
-All new vertices added in that step can be removed without adding fill.
+A leaf of this tree is a clique that has just been added on.
+For example, $A_r$ will be a leaf in this tree.
+This clique must have at least one vertex that isn't in any of the other cliques.
+If this vertex is removed all its neighbors are in the corresponding clique.
+Therefore, all fill edges that would be added when this vertex is removed are in this clique, so we have a perfect elimination order.
 
 \begin{corollary}\label{cor:clique_perfect}
     Clique sums of cliques have perfect elimination orders.
 \end{corollary}
 
+If we have a corded graph and a minimal separator then there must be a path between any two vertices in the separator.
+Otherwise, there is a smaller separator.
+We therefore have a cycle of length at least four in a chordal graph, which implies that the minimum separator must be a clique.
+
 \begin{lemma}\label{lem:chord_sums}
     Chorded graphs are clique sums of cliques.
 \end{lemma}
 \begin{proof}
-
-    If we have a corded graph and a minimal separator then there must be a path between any two vertices in the separator.
-    If the graph is chordal then min separators must be cliques.
-    Note that every minimum separator in a chordal graph is a clique.
-
     If the graph is a clique we are done.
     Otherwise take any minimal separator $C$ which separates subgraphs $A$ and $B$.
     $C$ is a clique and, because subgraphs of chordal graphs are chordal, $A$ and $B$ are chordal.
@@ -126,12 +129,17 @@ All new vertices added in that step can be removed without adding fill.
 \end{theorem}
 \begin{proof}
     \noindent
-    $(\Rightarrow)$ Suppose there is a perfect elimination ordering and an induced cycle that is not a clique.
-    If we have a perfect elimination ordering one of these vertices must be removed.
-    First that would add an edge to the fill graph, a chord, not induced.
+    $(\Rightarrow)$ Suppose there is a perfect elimination ordering and an induced cycle that is not a triangle.
+    If we have a perfect elimination ordering one of these vertices must be removed first.
+    This vertex has two neighbors in the cycle that do not share an edge, otherwise the cycle would be a triangle.
+    Therefore, a fill edge must be added when the vertex is removed, a contradiction, so we may conclude that the induced cycle is a triangle.
 
     \noindent
     $(\Leftarrow)$ By Lemma~\ref{lem:chord_sums} $G$ is a sum of cliques, which has a perfect elimination order by Corollary~\ref{cor:clique_perfect}.
 \end{proof}
+
+\begin{definition}
+    A graph $G$ has \emph{treewidth} $\leq k$ if $G$ is a subgraph of a clique sum of cliques of size $k+1$.
+\end{definition}
 
 \end{document}
