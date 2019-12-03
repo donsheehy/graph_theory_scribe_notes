@@ -32,6 +32,7 @@ This reordering can sometimes dramatically improve the performance.
 \input{figures/fig1}
 
 For some ordering $v_1,\ldots, v_n$ on the vertices of a graph $G$ let $G_i$ be the graph after vertices 1-$i$ are eliminated.
+Figure~\ref{fig:elimination} depicts an elimination ordering on a graph with $6$ vertices and the resulting graphs $G=G_0, G_1,\ldots, G_6=\emptyset$.
 The \emph{fill graph} is the graph $G^+ = (\{1,\ldots, n\}, E^+)$ with the same vertex set and all of the \emph{fill edges} $E^+ = \bigcup_{i=1}^n E_{G_i}$ resulting from eliminations.
 For a given ordering we would like to minimize the number of fill edges.
 
@@ -92,7 +93,7 @@ Examples of perfect elimination graphs include trees and triangulated polygons.
 
 \input{figures/fig3}
 
-We can glue graphs along shared $k$-cliques using the \emph{$k$-clique sum}, depicted in Figure.%~\ref{}
+We can glue graphs along shared $k$-cliques using the \emph{$k$-clique sum}, depicted in Figure~\ref{fig:clique_sum}.
 Note that the clique sum of chordal graphs is chordal.
 Moreover, every chordal graph can be constructed in this way by iteratively gluing chordal subgraphs.
 Further note that $A_i\cap G_{i-1}\subseteq A_j$ for some $j < i$.
