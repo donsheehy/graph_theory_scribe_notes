@@ -671,11 +671,11 @@ Let $W$ be the edges of a walk from $a$ to $b$ that does not repeat any edges.\\
     Prove that if $G$ is connected, then there is a pair of walk that don’t repeat any edges, don’t have any edges in common, and together, touch every edge of $G$.
 \end{question}
 \begin{proof}
-    It follows from the previous question that if $G$ is connected if we take the longest walk W from $a$ to $b$, then Graph $G'$ is still connected.
+    It follows from the previous question that if $G$ is connected and we take the longest walk W from $a$ to $b$, then Graph $G'$ is still connected.
     \\ \\
     Again, by \textbf{Euler Theorem}, a connected graph with all even degree vertices except two vertices (source and destination) as odd degree vertices, has an \textit{Euler Walk} from the source to destination. Let this be denoted by W2.
     \\ \\
-    $\implies \text{In Graph $G'$, as only $c$ and $d$ vertices have odd degree, while all other vertices have even degree, there exists an}$ \\ \textit{Euler} \text{from $c$ to $d$.}
+    $\implies \text{In Graph $G'$, as only $c$ and $d$ vertices have odd degree, while all other vertices have even degree, there exists an}$ \\ \textit{Euler walk} \text{from $c$ to $d$.}
     
     $\therefore \text{Walks W and W2 don't repeat any edges, don't have any edges in common, and together, touch every edge of Graph $G$.}$
 \end{proof}
